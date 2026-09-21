@@ -81,13 +81,14 @@ int main() {
             }
         }
         else if (command == "start_marquee") {
-
+            marqueeRunning = true;
         }
         else if (command == "stop_marquee") {
-
+            marqueeRunning = false;
         }
         else if (command == "exit") {
-
+            std::cout << "Terminating console..." << std::endl << std::endl;
+            running = false;
         }
         else if (command.empty()) {
             // Empty input, just reprompt without an error.
