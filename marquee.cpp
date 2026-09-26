@@ -2,15 +2,22 @@
 #include <string>
 
 void printHeader() {
-    std::cout << "Welcome to CSOPESY!" << std::endl << std::endl;
-
     std::cout << "Group developer:" << std::endl;
     std::cout << "Marcos, Alain Zuriel" << std::endl;
     std::cout << "Camato, Karl Kristoffer" << std::endl;
     std::cout << "Malapitan, Ryan James" << std::endl;
     std::cout << "Bendol, Trisha Mae" << std::endl << std::endl;
 
-    std::cout << "Version date: 2026-09-22" << std::endl << std::endl;
+    std::cout << "Version date: 2026-09-27" << std::endl << std::endl;
+}
+
+void printLogo() {
+    std::cout << R"(
+    __        _______ _     ____ ___  __  __ _____   _____ ___     ___  ____  _____ ______   __  _ 
+    \ \      / / ____| |   / ___/ _ \|  \/  | ____| |_   _/ _ \   / _ \|  _ \| ____/ ___\ \ / / | |
+     \ \ /\ / /|  _| | |  | |  | | | | |\/| |  _|     | || | | | | | | | |_) |  _| \___ \\ V /  | |
+      \ V  V / | |___| |__| |__| |_| | |  | | |___    | || |_| | | |_| |  __/| |___ ___) || |   |_|
+       \_/\_/  |_____|_____\____\___/|_|  |_|_____|   |_| \___/   \___/|_|   |_____|____/ |_|   (_))" << std::endl << std::endl;
 }
 
 void printHelp() {
@@ -23,6 +30,7 @@ void printHelp() {
 }
 
 int main() {
+    printLogo();
     printHeader();
 
     std::string savedText;
@@ -81,10 +89,20 @@ int main() {
             }
         }
         else if (command == "start_marquee") {
-            marqueeRunning = true;
+
+            if (savedText.empty()) {
+            std::cout << "Error: No text has been set." << std::endl << std::endl;
+            }
+            else {
+                marqueeRunning = true;
+                std::cout << "Marquee started: " << savedText << std::endl << std::endl;
+            }
+
         }
         else if (command == "stop_marquee") {
             marqueeRunning = false;
+
+            std::cout << "Marquee stopped." << std::endl << std::endl;
         }
         else if (command == "exit") {
             std::cout << "Terminating console..." << std::endl << std::endl;
