@@ -108,9 +108,15 @@ int main() {
 
         }
         else if (command == "stop_marquee") {
+            if (!marqueeRunning)
+            {
+                std::cout << "Error: Marquee is already stopped." << std::endl << std::endl;
+            }
+            else
+            {
             marqueeRunning = false;
-
             std::cout << "Marquee stopped." << std::endl << std::endl;
+            }
         }
         else if (command == "exit") {
             std::cout << "Terminating console..." << std::endl << std::endl;
