@@ -81,7 +81,15 @@ int main() {
             else {
                 try {
                     marqueeSpeedMs = std::stoi(argument);
-                    std::cout << "Marquee speed set to " << marqueeSpeedMs << " ms." << std::endl << std::endl;
+
+                    // Validate that the speed is a positive integer
+                    if (marqueeSpeedMs <= 0) {
+                        std::cout << "Error: speed must be greater than 0 ms." << std::endl << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Marquee speed set to " << marqueeSpeedMs << " ms." << std::endl << std::endl;
+                    }
                 } 
                 catch (const std::exception&) {
                     std::cout << "Error: invalid speed value." << std::endl << std::endl;
