@@ -38,11 +38,6 @@ g++ -std=c++17 marquee.cpp -o marquee
 ./marquee
 ```
 
-**Linux**
-```
-g++ marquee.cpp -o marquee -std=c++17 -pthread
-./marquee
-```
 
 ## Available Commands
 | Command | Description |
