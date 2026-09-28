@@ -219,14 +219,18 @@ int main() {
                 std::cout << "Error: Marquee is already stopped." << std::endl << std::endl;
             }
             else {
-                
+                marqueeRunning = false;
+                if (marqueeThread.joinable()){
+                    marqueeThread.join();
+                }
+                std::cout << "Marquee stopped." << std::endl << std::endl;
             }
         }
         else if (command == "exit") {
             if (marqueeRunning) {
                 marqueeRunning = false;
                 if (marqueeThread.joinable()) {
-                    marqueeThread.join();
+                    marqueeThread.join(); //waits for thread to finish
                 }
             }
             std::cout << "Terminating console..." << std::endl << std::endl;
