@@ -70,6 +70,8 @@ void marqueeLoop() {
     const int colorCodes[6] = { 31, 33, 32, 36, 34, 35 };
     int frameCounter = 0;
 
+    size_t i = 0;
+
     while (marqueeRunning) {
         std::string text;
         int speed;
@@ -79,36 +81,37 @@ void marqueeLoop() {
             speed = marqueeSpeedMs;
         }
 
+        if (text.empty()) {
+            continue;
+        }
+
         std::string padded = text + std::string(windowWidth, ' ');
         size_t len = padded.size();
 
-        for (size_t i = 0; i < len && marqueeRunning; ++i) {
-            std::string frame = padded.substr(i) + padded.substr(0, i);
-            if (frame.size() > (size_t)windowWidth) {
-                frame = frame.substr(0, windowWidth);
-            }
+        size_t position = i % len;
 
-            char spinner = spinnerFrames[frameCounter % 4];
-            int color = colorCodes[frameCounter % 6];
-            frameCounter++;
-
-            {
-                std::lock_guard<std::mutex> lock(coutMutex);
-                std::cout << "\x1b[s"                      // save cursor (user's current typing spot)
-                           << "\x1b[1A"                      // move up one line to the animation row
-                           << "\x1b[2K"                       // clear that row completely
-                           << "\r" << spinner << " \x1b[" << color << "m[" << frame << "]\x1b[0m " << spinner
-                           << "\x1b[u"                        // restore cursor back to the prompt row
-                           << std::flush;
-            }
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(speed));
-
-            {
-                std::lock_guard<std::mutex> lock(stateMutex);
-                speed = marqueeSpeedMs;
-            }
+        std::string frame = padded.substr(position) + padded.substr(0, position);
+        if (frame.size() > (size_t)windowWidth) {
+            frame = frame.substr(0, windowWidth);
         }
+
+        char spinner = spinnerFrames[frameCounter % 4];
+        int color = colorCodes[frameCounter % 6];
+        frameCounter++;
+
+        {
+            std::lock_guard<std::mutex> lock(coutMutex);
+            std::cout << "\x1b[s"                      // save cursor (user's current typing spot)
+                        << "\x1b[1A"                      // move up one line to the animation row
+                        << "\x1b[2K"                       // clear that row completely
+                        << "\r" << spinner << " \x1b[" << color << "m[" << frame << "]\x1b[0m " << spinner
+                        << "\x1b[u"                        // restore cursor back to the prompt row
+                        << std::flush;
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(speed));
+
+        i++;
     }
 
     // Clear the reserved animation row once stopped.
@@ -170,7 +173,11 @@ int main() {
             if (argument.empty()) {
                 std::cout << "Error: set_text requires a text argument." << std::endl << std::endl;
             } else {
-                savedText = argument;
+                // To save the text and avoid data race between main thread and marquee thread
+                {
+                    std::lock_guard<std::mutex> lock(stateMutex);
+                    savedText = argument;
+                }
                 std::cout << "Text saved for marquee: " << savedText << std::endl << std::endl;
             }
         }
