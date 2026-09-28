@@ -1,0 +1,18 @@
+# Marquee Console configuration
+# Format: key=value  (lines starting with # are ignored)
+# Edit this file before pressing Run. Do not recompile.
+
+# Initial marquee text (can still be changed with set_text)
+text=Hello from CSOPESY!
+
+# Marquee refresh rate in milliseconds (lower = faster animation)
+speed_ms=300
+
+# Width of the marquee window in characters
+width=40
+
+# Keyboard polling interval in milliseconds (lower = more responsive typing, more CPU)
+polling_ms=10
+
+# Start the marquee automatically on launch (true/false)
+autostart=false
