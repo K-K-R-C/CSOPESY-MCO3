@@ -52,5 +52,5 @@ g++ -std=c++17 marquee.cpp -o marquee
 ## Notes
  - Default marquee refresh speed is 300 ms
  - Commands are case-sensitive ('help' works, but 'HELP' does not)
- - A blank/space-only input is silently ignored rather than treated as an unrecognized command
+ - Any input with a leading space, or a blank input, is silently ignored rather than treaded as an unrecognized command
  - 'set_text' must be called with non-empty text before 'start_marquee' will run
