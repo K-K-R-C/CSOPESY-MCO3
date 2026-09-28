@@ -33,10 +33,10 @@ void enableAnsiSupport() {
 
 void printHeader() {
     std::cout << "Group developer:" << std::endl;
-    std::cout << "Marcos, Alain Zuriel" << std::endl;
+    std::cout << "Bendol, Trisha Mae" << std::endl;
     std::cout << "Camato, Karl Kristoffer" << std::endl;
     std::cout << "Malapitan, Ryan James" << std::endl;
-    std::cout << "Bendol, Trisha Mae" << std::endl << std::endl;
+    std::cout << "Marcos, Alain Zuriel" << std::endl << std::endl;
 
     std::cout << "Version date: 2026-09-27" << std::endl << std::endl;
 }
