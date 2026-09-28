@@ -293,7 +293,6 @@ int main() {
             command = line.substr(0, spacePos);
             argument = trim(line.substr(spacePos + 1));
         }
-        command = toLower(command);
 
         if (command.empty()) {
             continue;
